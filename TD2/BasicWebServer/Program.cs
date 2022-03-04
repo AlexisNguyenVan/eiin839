@@ -4,6 +4,11 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Diagnostics;
+
 
 namespace BasicServerHTTPlistener
 {
@@ -87,30 +92,58 @@ namespace BasicServerHTTPlistener
                 Console.WriteLine(request.Url.LocalPath);
 
                 // parse path in url 
+                string methodname = request.Url.LocalPath.Substring(1);
+
                 foreach (string str in request.Url.Segments)
                 {
                     Console.WriteLine(str);
+
                 }
 
                 //get params un url. After ? and between &
 
                 Console.WriteLine(request.Url.Query);
-
                 //parse params in url
-                Console.WriteLine("param1 = " + HttpUtility.ParseQueryString(request.Url.Query).Get("param1"));
-                Console.WriteLine("param2 = " + HttpUtility.ParseQueryString(request.Url.Query).Get("param2"));
-                Console.WriteLine("param3 = " + HttpUtility.ParseQueryString(request.Url.Query).Get("param3"));
-                Console.WriteLine("param4 = " + HttpUtility.ParseQueryString(request.Url.Query).Get("param4"));
 
+                //Console.WriteLine(request.Url.Query.Split('&').Length) ;
+                string[] paramsMethod = new string[request.Url.Query.Split('&').Length];
+                //Console.WriteLine(request.Url.Query.Split('&')[0]);
+                for(int i=1;i<= request.Url.Query.Split('&').Length;i++)
+                {
+                    Console.WriteLine($"param{i}= " + HttpUtility.ParseQueryString(request.Url.Query).Get($"param{i}"));
+                    paramsMethod[i - 1] = HttpUtility.ParseQueryString(request.Url.Query).Get($"param{i}");
+                }
+
+                //Reflection
+             
+                Type type = typeof(MyReflectionClass);
+                MethodInfo method = type.GetMethod(methodname);
+                MyReflectionClass c = new MyReflectionClass();
+                string responseString = "";
+                if (c.GetType().GetMethod(methodname) != null)
+                {
+                     if(methodname=="MyMethod")
+                        responseString = (string)method.Invoke(c, paramsMethod);
+                    if (methodname == "incr")
+                    {
+                        responseString = ((int)method.Invoke(c, paramsMethod)).ToString();
+                    }
+                    else
+                        responseString = (string)method.Invoke(c, null);
+                     
+                }
+
+
+                
                 //
-                Console.WriteLine(documentContents);
+                //Console.WriteLine(documentContents);
 
                 // Obtain a response object.
                 HttpListenerResponse response = context.Response;
 
-                // Construct a response.
-                string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
+
                 byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+
                 // Get a response stream and write the response to it.
                 response.ContentLength64 = buffer.Length;
                 System.IO.Stream output = response.OutputStream;
@@ -120,6 +153,50 @@ namespace BasicServerHTTPlistener
             }
             // Httplistener neither stop ... But Ctrl-C do that ...
             // listener.Stop();
+        }
+    }
+    public class MyReflectionClass
+    {
+        public string MyMethod(String param1,String param2)
+        {
+            string responseString = $"<HTML><BODY> Hello {param1} et {param2}</BODY></HTML>";
+            return responseString;
+        }
+
+        public int incr(string a)
+        {
+            int x =Int32.Parse(a);
+             x++;
+            return x;
+        }
+
+        public string callExe()
+        {
+            //
+            // Set up the process with the ProcessStartInfo class.
+            // https://www.dotnetperls.com/process
+            //
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = @"C:\Users\ngnva\source\repos\td2\TD2\ExecTest\bin\Debug\ExecTest.exe"; // Specify exe name.
+            start.Arguments = "Utilisation executable"; // Specify arguments.
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            //
+            // Start the process.
+            //
+            using (Process process = Process.Start(start))
+            {
+                //
+                // Read in all the text from the process with the StreamReader.
+                //
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                  
+                    Console.WriteLine(result);
+                    return result;
+                }
+            }
         }
     }
 }

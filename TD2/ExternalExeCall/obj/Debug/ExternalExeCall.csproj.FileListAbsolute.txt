@@ -12,3 +12,11 @@ D:\ENSEIGNEMENTS\SoCWS SI4\TD REFLEXION SAMPLE\ReflectionSample\ExternalExeCall\
 D:\ENSEIGNEMENTS\SoCWS SI4\TD REFLEXION SAMPLE\ReflectionSample\ExternalExeCall\obj\Debug\ExternalExeCall.csproj.CoreCompileInputs.cache
 D:\ENSEIGNEMENTS\SoCWS SI4\TD REFLEXION SAMPLE\ReflectionSample\ExternalExeCall\obj\Debug\ExternalExeCall.exe
 D:\ENSEIGNEMENTS\SoCWS SI4\TD REFLEXION SAMPLE\ReflectionSample\ExternalExeCall\obj\Debug\ExternalExeCall.pdb
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\bin\Debug\ExternalExeCall.exe.config
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\bin\Debug\ExternalExeCall.exe
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\bin\Debug\ExternalExeCall.pdb
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\obj\Debug\ExternalExeCall.csproj.AssemblyReference.cache
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\obj\Debug\ExternalExeCall.csproj.SuggestedBindingRedirects.cache
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\obj\Debug\ExternalExeCall.csproj.CoreCompileInputs.cache
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\obj\Debug\ExternalExeCall.exe
+C:\Users\ngnva\source\repos\td2\TD2\ExternalExeCall\obj\Debug\ExternalExeCall.pdb
